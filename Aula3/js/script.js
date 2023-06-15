@@ -1,27 +1,23 @@
 function validarCPF() {
-	const inputCPF = document.getElementById("CPF").value;
-
-	const cpf = limpaFormatacao(inputCPF);
+	const cpf = document.getElementById("CPF").value;
 
 	if (cpf.length != 11) {
 		mostrarResultado("CPF deve ter 11 dígitos", "red");
-		return;
+		return false;
 	}
 
 	if (verificarDigitosRepetidos(cpf)) {
 		mostrarResultado("CPF não deve conter repetição do mesmo dígito", "red");
-		return;
+		return false;
 	}
 
 	const digito1 = verificarDigitoVerificador(cpf, 1);
 	const digito2 = verificarDigitoVerificador(cpf, 2);
 
-	if (!digito1 || !digito2) {
-		mostrarResultado("CPF inválido - " + inputCPF, "red");
-		return;
+	if (digito1 && digito2) {
+		mostrarResultado("CPF válido - " + cpf, "green");
 	} else {
-		mostrarResultado("CPF válido - " + inputCPF, "green");
-		return;
+		mostrarResultado("CPF inválido - " + cpf, "red");
 	}
 }
 
@@ -34,24 +30,16 @@ function verificarDigitoVerificador(cpf, posicao) {
 	for (const numero of sequencia) {
 		soma += multiplicador * Number(numero);
 		multiplicador--;
-
-		const restoDivisao = (soma * 10) % 11;
-		const digito = cpf.slice(8 + posicao, 9 + posicao);
-
-		return restoDivisao == digito;
 	}
-}
 
-function limpaFormatacao(cpf) {
-	cpf = cpf.replace(/\D/g, "");
+	const restoDivisao = (soma * 10) % 11;
+	const digito = cpf.slice(8 + posicao, 9 + posicao);
 
-	return cpf;
+	return restoDivisao == digito;
 }
 
 function mostrarResultado(texto, cor) {
 	const span = document.getElementById("resultado");
-
-	span.innerHTML = "";
 
 	span.innerHTML = texto;
 	span.style.color = cor;
