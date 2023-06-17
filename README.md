@@ -5,8 +5,8 @@ Projeto desenvolvido junto aos tutores da Teknisa (Rômulo e Oliver)
 <h2 align="center">Tabela de conteúdos</h2>
 
 <!--ts-->
-   * Verificador de CPF
    * Projeto com Node
    * Calculadora
+   * Verificador de CPF
 <!--te-->
 
